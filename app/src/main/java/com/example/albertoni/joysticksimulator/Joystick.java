@@ -61,7 +61,6 @@ public class Joystick extends AppCompatActivity {
             if (actionBar != null) {
                 actionBar.show();
             }
-            mControlsView.setVisibility(View.VISIBLE);
         }
     };
     private boolean mVisible;
@@ -107,8 +106,8 @@ public class Joystick extends AppCompatActivity {
     private final double secondAngle = 22.5 + 45.0;
 
     private enum Direction {
-      LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, NEUTRAL;
-    };
+      LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, NEUTRAL
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +116,6 @@ public class Joystick extends AppCompatActivity {
         setContentView(R.layout.activity_joystick);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
 
@@ -128,11 +126,6 @@ public class Joystick extends AppCompatActivity {
                 toggle();
             }
         });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
 
         debugText = (TextView) findViewById(R.id.textView);
@@ -281,6 +274,8 @@ public class Joystick extends AppCompatActivity {
             case UPRIGHT:
                 debugText.setText("UPRIGHT");
                 break;
+            default:
+                debugText.setText("FUUUUUUUUUUUUCK");
         }
 
         // TODO: Send direction to server
@@ -318,7 +313,6 @@ public class Joystick extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay

@@ -272,7 +272,7 @@ public class Joystick extends AppCompatActivity {
     }
 
     private boolean isInsideTriangle(int x, int y, double tangent){
-        return y < x * tangent;
+        return y > x * tangent;
     }
 
 

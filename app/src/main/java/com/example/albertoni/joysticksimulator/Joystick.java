@@ -166,13 +166,13 @@ public class Joystick extends AppCompatActivity {
             case MotionEvent.ACTION_MOVE:
                 // Figuring out which corner we are makes things easier
                 quadrant += (x > centerWidth ? RIGHT : LEFT);
-                quadrant += (y > centerHeight ? TOP : BOTTOM);
+                quadrant += (y > centerHeight ? BOTTOM : TOP);
 
                 // Now we get the x/y distance from the center so we can calculate in which of the 8 directions we are
                 int xDist = Math.abs(x - centerWidth);
                 int yDist = Math.abs(y - centerHeight);
 
-                if ((xDist * xDist) + (yDist + yDist) < neutralZoneCircle){ // If it's inside the neutral zone circle...
+                if ((xDist * xDist) + (yDist * yDist) < neutralZoneCircle){ // If it's inside the neutral zone circle...
                     pressedDirection = Direction.NEUTRAL;
                 }else{
                     boolean isPastFirstAngle = isInsideTriangle(xDist, yDist, firstAngle);

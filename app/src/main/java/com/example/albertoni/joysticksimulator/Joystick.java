@@ -145,8 +145,9 @@ public class Joystick extends AppCompatActivity {
 
     /**
      * This is where we get the touch and process it to figure out where it is on the screen
-     * @param event
-     * @return
+     * @param event A MotionEvent from the API
+     * @return True if the listener has consumed the event, false otherwise. We always return true
+     *         except in case of errors.
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {

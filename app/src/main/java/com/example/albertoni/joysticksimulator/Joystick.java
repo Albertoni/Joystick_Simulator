@@ -118,16 +118,6 @@ public class Joystick extends AppCompatActivity {
         mVisible = true;
         mContentView = findViewById(R.id.fullscreen_content);
 
-
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
-
-
         debugText = (TextView) findViewById(R.id.textView);
 
         // Getting the size of the screen

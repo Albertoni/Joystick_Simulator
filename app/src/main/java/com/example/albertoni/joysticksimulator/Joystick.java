@@ -86,24 +86,24 @@ public class Joystick extends AppCompatActivity {
     };
 
     private TextView debugText;
-    private int screenWidth;
-    private int screenHeight;
     private int centerWidth;
     private int centerHeight;
 
     // How far from the center should be a neutral zone
     private final int neutralZoneSize = 40;
-    // precalculate the square for later neutral zone circle
+    // precalculate the square of the radius for later neutral zone circle
     private final int neutralZoneCircle = neutralZoneSize * neutralZoneSize;
-
-    private double tangentFirstQuadrant;
-    private double tangentSecondQuadrant;
 
     // We have 8 directions, 360° / 8 = 45°
     // It's divided by two because later on we'll divide the screen in 4 parts to make the math
     // easier; Each part has a whole diagonal direction and two halves of the straight directions.
     private final double firstAngle = 22.5;
     private final double secondAngle = 22.5 + 45.0;
+
+    // Precalculate the tangents dividing the areas because performance
+    // This isn't the demoscene but we have battery to save here
+    private final double tangentFirstQuadrant = Math.tan(Math.toRadians(firstAngle));
+    private final double tangentSecondQuadrant = Math.tan(Math.toRadians(secondAngle));
 
     private enum Direction {
       LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, NEUTRAL
@@ -124,24 +124,19 @@ public class Joystick extends AppCompatActivity {
         Point size = new Point();
         WindowManager w = getWindowManager();
         w.getDefaultDisplay().getSize(size);
-        screenWidth = size.x;
-        screenHeight = size.y;
+        int screenWidth = size.x;
+        int screenHeight = size.y;
 
         // The program can only be used in landscape mode, so the width must be the bigger one:
         if(screenWidth < screenHeight){
             int temp = screenHeight;
             // Thanks, intellij, but in this case this suspicious assignment is actually correct :B
             //noinspection SuspiciousNameCombination
-            screenWidth = screenHeight;
+            screenHeight = screenWidth;
             screenWidth = temp;
         }
         centerHeight = screenHeight / 2;
         centerWidth = screenWidth / 2;
-
-        // Precalculate the tangents dividing the areas because performance
-        // This isn't the demoscene but we have battery to save here
-        tangentFirstQuadrant = Math.tan(Math.toRadians(firstAngle));
-        tangentSecondQuadrant = Math.tan(Math.toRadians(secondAngle));
     }
 
 
@@ -178,8 +173,8 @@ public class Joystick extends AppCompatActivity {
                 if ((xDist * xDist) + (yDist * yDist) < neutralZoneCircle){ // If it's inside the neutral zone circle...
                     pressedDirection = Direction.NEUTRAL;
                 }else{
-                    boolean isPastFirstAngle = isInsideTriangle(xDist, yDist, firstAngle);
-                    boolean isPastSecondAngle = isInsideTriangle(xDist, yDist, secondAngle);
+                    boolean isPastFirstAngle = isInsideTriangle(xDist, yDist, tangentFirstQuadrant);
+                    boolean isPastSecondAngle = isInsideTriangle(xDist, yDist, tangentSecondQuadrant);
 
                     switch (quadrant){
                         case (LEFT + TOP):

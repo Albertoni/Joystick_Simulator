@@ -130,6 +130,8 @@ public class Joystick extends AppCompatActivity {
         // The program can only be used in landscape mode, so the width must be the bigger one:
         if(screenWidth < screenHeight){
             int temp = screenHeight;
+            // Thanks, intellij, but in this case this suspicious assignment is actually correct :B
+            //noinspection SuspiciousNameCombination
             screenWidth = screenHeight;
             screenWidth = temp;
         }

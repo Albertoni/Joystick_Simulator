@@ -9,7 +9,9 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -105,6 +107,9 @@ public class Joystick extends AppCompatActivity {
     private final double tangentFirstQuadrant = Math.tan(Math.toRadians(firstAngle));
     private final double tangentSecondQuadrant = Math.tan(Math.toRadians(secondAngle));
 
+    // To ignore inputs while not connected
+    private boolean isConnected = false;
+
     private enum Direction {
       LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, NEUTRAL
     }
@@ -137,6 +142,19 @@ public class Joystick extends AppCompatActivity {
         }
         centerHeight = screenHeight / 2;
         centerWidth = screenWidth / 2;
+
+        // connection button
+        Button connect = (Button) findViewById(R.id.button);
+        if (connect != null) {
+            connect.setOnClickListener(new Button.OnClickListener(){
+                public void onClick(View v){
+
+                }
+            });
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(), "Button is null, panic", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
 
@@ -148,6 +166,10 @@ public class Joystick extends AppCompatActivity {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // No reason to do anything while not connected
+        if (!isConnected){
+            return false;
+        }
         // some constants to make the following code easier to follow
         final int LEFT = 1;
         final int RIGHT = 0;
@@ -268,7 +290,7 @@ public class Joystick extends AppCompatActivity {
 
         // TODO: Send direction to server
 
-        return false;
+        return true;
     }
 
     private boolean isInsideTriangle(int x, int y, double tangent){
@@ -329,3 +351,4 @@ public class Joystick extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 }
+

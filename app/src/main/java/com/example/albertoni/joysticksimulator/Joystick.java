@@ -1,6 +1,7 @@
 package com.example.albertoni.joysticksimulator;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Point;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import android.widget.Toast;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class Joystick extends AppCompatActivity {
+public class Joystick extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -59,10 +60,10 @@ public class Joystick extends AppCompatActivity {
         @Override
         public void run() {
             // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
+            /*ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.show();
-            }
+            }*/
         }
     };
     private boolean mVisible;
@@ -319,7 +320,7 @@ public class Joystick extends AppCompatActivity {
 
     private void hide() {
         // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
+        /*ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
@@ -327,7 +328,7 @@ public class Joystick extends AppCompatActivity {
 
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);*/
     }
 
     @SuppressLint("InlinedApi")

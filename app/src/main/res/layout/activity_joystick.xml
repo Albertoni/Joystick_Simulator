@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#006699"
     tools:context="com.example.albertoni.joysticksimulator.Joystick">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -29,14 +29,15 @@
         <Button
             android:layout_width="147dp"
             android:layout_height="wrap_content"
-            android:text="Connect"
+            android:text="@string/connect"
             android:id="@+id/button"
+            android:layout_marginBottom="50dp"
             android:layout_gravity="center_horizontal|bottom" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="number|text"
             android:digits="0123456789."
             android:ems="10"
             android:id="@+id/editText"
@@ -46,8 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Enter IP please"
+            android:text="@string/enter_ip_please"
             android:id="@+id/textView"
+            android:layout_marginTop="70dp"
             android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
 

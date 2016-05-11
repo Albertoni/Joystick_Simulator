@@ -79,13 +79,16 @@ public class Joystick extends Activity {
         centerWidth = screenWidth / 2;
 
         // connection button
-        Button connect = (Button) findViewById(R.id.button);
+        final Button connect = (Button) findViewById(R.id.button);
         if (connect != null) {
             connect.setOnClickListener(new Button.OnClickListener(){
                 public void onClick(View v){
                     EditText in = (EditText) findViewById(R.id.editText);
-                    boolean result = connection.connect(in.getText().toString());
-                    if (!result){
+                    boolean connected = connection.connect(in.getText().toString());
+                    if (connected){
+                        connect.setVisibility(View.GONE);
+                        in.setVisibility(View.GONE);
+                    }else{
                         Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to this IP!", Toast.LENGTH_SHORT);
                         toast.show();
                     }

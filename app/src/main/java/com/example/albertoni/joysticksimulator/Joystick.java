@@ -2,6 +2,8 @@ package com.example.albertoni.joysticksimulator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -302,7 +304,6 @@ public class Joystick extends Activity {
                 debugText.setText("FUUUUUUUUUUUUCK");
         }
 
-        // TODO: Send direction to server
         connection.sendState(pressedDirection);
 
         return true;
@@ -310,6 +311,24 @@ public class Joystick extends Activity {
 
     private boolean isInsideTriangle(int x, int y, double tangent){
         return y > x * tangent;
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Exit?");
+        builder.setMessage("Do you want to exit? ");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                connection.close();
+                Joystick.super.onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {}
+        });
+        builder.show();
     }
 
 

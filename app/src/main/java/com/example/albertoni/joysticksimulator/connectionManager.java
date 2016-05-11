@@ -1,15 +1,19 @@
 package com.example.albertoni.joysticksimulator;
 
+import android.database.CursorJoiner;
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
 
-public class ConnectionManager {
+public class ConnectionManager{
     private Socket socket = null;
     private Joystick.Direction previousDirection = Joystick.Direction.NEUTRAL;
     private OutputStream exit = null;
     public boolean isConnected(){
-        return (socket == null);
+        return (socket != null);
     }
 
     /**
@@ -19,14 +23,18 @@ public class ConnectionManager {
      */
     public boolean connect(String address){
         try {
-            int portNumber = 49000;
-            socket = new Socket(address, portNumber);
-            socket.setKeepAlive(true);
+            socket = new Connection().execute(address).get();
             exit = socket.getOutputStream();
-        } catch (IOException e){
-            socket = null;
-            return false;
+            return true;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        socket = null;
         return true;
     }
 
@@ -41,4 +49,14 @@ public class ConnectionManager {
             }
         }
     }
+
+    public void close(){
+        if(!isConnected()){return;}
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

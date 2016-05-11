@@ -43,6 +43,7 @@ public class ConnectionManager{
         if (!isConnected()){throw new IllegalStateException();}
 
         if (direction != previousDirection){ // if it's the same we don't need to send it
+            previousDirection = direction;
             try {
                 exit.write(direction.getValue());
             } catch (IOException e) {

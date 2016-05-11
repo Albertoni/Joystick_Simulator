@@ -4,5 +4,5 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content"/>
     <string name="connect">Connect</string>
-    <string name="enter_ip_please">Enter IP please</string>
+    <string name="enter_ip_please">Enter IP</string>
 </resources>

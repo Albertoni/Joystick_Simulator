@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,11 +109,18 @@ public class Joystick extends Activity {
     private final double tangentFirstQuadrant = Math.tan(Math.toRadians(firstAngle));
     private final double tangentSecondQuadrant = Math.tan(Math.toRadians(secondAngle));
 
-    // To ignore inputs while not connected
-    private boolean isConnected = false;
+    private ConnectionManager connection = new ConnectionManager();
 
-    private enum Direction {
-      LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, NEUTRAL
+    public enum Direction {
+      LEFT(0), UPLEFT(1), UP(2), UPRIGHT(3), RIGHT(4), DOWNRIGHT(5), DOWN(6), DOWNLEFT(7), NEUTRAL(8);
+
+        private final byte dir;
+        Direction(int dir) {
+            this.dir = (byte) dir;
+        }
+        public byte getValue(){
+            return dir;
+        }
     }
 
     @Override
@@ -149,7 +157,12 @@ public class Joystick extends Activity {
         if (connect != null) {
             connect.setOnClickListener(new Button.OnClickListener(){
                 public void onClick(View v){
-
+                    EditText in = (EditText) findViewById(R.id.editText);
+                    boolean result = connection.connect(in.getText().toString());
+                    if (!result){
+                        Toast toast = Toast.makeText(getApplicationContext(), "Unable to connect to this IP!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
             });
         }else{
@@ -168,7 +181,7 @@ public class Joystick extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // No reason to do anything while not connected
-        if (!isConnected){
+        if (!connection.isConnected()){
             return false;
         }
         // some constants to make the following code easier to follow
@@ -290,6 +303,7 @@ public class Joystick extends Activity {
         }
 
         // TODO: Send direction to server
+        connection.sendState(pressedDirection);
 
         return true;
     }

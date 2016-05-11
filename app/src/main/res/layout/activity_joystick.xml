@@ -49,7 +49,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/enter_ip_please"
             android:id="@+id/textView"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
 

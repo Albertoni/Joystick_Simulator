@@ -24,8 +24,12 @@ public class ConnectionManager{
     public boolean connect(String address){
         try {
             socket = new Connection().execute(address).get();
-            exit = socket.getOutputStream();
-            return true;
+            if (socket != null){
+                exit = socket.getOutputStream();
+                return true;
+            }else{
+                return false;
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -35,7 +39,7 @@ public class ConnectionManager{
         }
 
         socket = null;
-        return true;
+        return false;
     }
 
     public void sendState(Joystick.Direction direction) throws IllegalStateException {

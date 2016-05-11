@@ -1,8 +1,5 @@
 package com.example.albertoni.joysticksimulator;
 
-import android.database.CursorJoiner;
-import android.os.AsyncTask;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
